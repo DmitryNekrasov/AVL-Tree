@@ -51,6 +51,23 @@ struct Node* rotateLeft(struct Node* q) {
     return p;
 }
 
+struct Node* balance(struct Node* p) {
+    fixHeight(p);
+    if (balanceFactor(p) == 2) {
+        if (balanceFactor(p->right) < 0) {
+            p->right = rotateRight(p->right);
+        }
+        return rotateLeft(p);
+    }
+    if (balanceFactor(p) == -2) {
+        if (balanceFactor(p->left) > 0) {
+            p->left = rotateLeft(p->left);
+        }
+        return rotateRight(p);
+    }
+    return p;
+}
+
 int main(int argc, char *argv[])
 {
     printf("Hello World!\n");
