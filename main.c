@@ -33,6 +33,24 @@ void fixHeight(struct Node* node) {
     node->height = max(h1, h2) + 1;
 }
 
+struct Node* rotateRight(struct Node* p) {
+    struct Node* q = p->left;
+    p->left = q->right;
+    q->right = p;
+    fixHeight(p);
+    fixHeight(q);
+    return q;
+}
+
+struct Node* rotateLeft(struct Node* q) {
+    struct Node* p = q->right;
+    q->right = p->left;
+    p->left = q;
+    fixHeight(q);
+    fixHeight(p);
+    return p;
+}
+
 int main(int argc, char *argv[])
 {
     printf("Hello World!\n");
