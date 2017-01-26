@@ -68,6 +68,18 @@ struct Node* balance(struct Node* p) {
     return p;
 }
 
+struct Node* insert(struct Node* root, int key) {
+    if (!root) {
+        return makeNode(key);
+    }
+    if (key < root->key) {
+        root->left = insert(root->left, key);
+    } else {
+        root->right = insert(root->right, key);
+    }
+    return balance(root);
+}
+
 int main(int argc, char *argv[])
 {
     printf("Hello World!\n");
