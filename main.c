@@ -80,8 +80,47 @@ struct Node* insert(struct Node* root, int key) {
     return balance(root);
 }
 
+void rootLeftRight(struct Node* root, int depth) {
+    if (root) {
+        for (int i = 0; i < depth; i++) {
+            printf(" ");
+        }
+        printf("%d (", root->key);
+        if (root->left) {
+            printf("%d, ", root->left->key);
+        } else {
+            printf("_, ");
+        }
+        if (root->right) {
+            printf("%d)\n", root->right->key);
+        } else {
+            printf("_)\n");
+        }
+
+        rootLeftRight(root->left, depth + 1);
+        rootLeftRight(root->right, depth + 1);
+    }
+}
+
+void printTree(struct Node* root) {
+    printf("\n");
+    rootLeftRight(root, 0);
+    printf("\n");
+}
+
 int main(int argc, char *argv[])
 {
-    printf("Hello World!\n");
+    struct Node* root = NULL;
+    int key;
+    while (1) {
+        printf("---> ");
+        scanf("%d", &key);
+        if (key == 0) {
+            break;
+        }
+        root = insert(root, key);
+        printTree(root);
+    }
+
     return 0;
 }
