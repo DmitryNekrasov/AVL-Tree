@@ -17,6 +17,7 @@ struct Node* makeNode(int key) {
     node->key = key;
     node->height = 1;
     node->left = node->right = NULL;
+    return node;
 }
 
 int height(struct Node* node) {
@@ -80,47 +81,36 @@ struct Node* insert(struct Node* root, int key) {
     return balance(root);
 }
 
-void rootLeftRight(struct Node* root, int depth) {
+void rootLeftRight(struct Node* root) {
     if (root) {
-        for (int i = 0; i < depth; i++) {
-            printf(" ");
-        }
-        printf("%d (", root->key);
-        if (root->left) {
-            printf("%d, ", root->left->key);
-        } else {
-            printf("_, ");
-        }
-        if (root->right) {
-            printf("%d)\n", root->right->key);
-        } else {
-            printf("_)\n");
-        }
-
-        rootLeftRight(root->left, depth + 1);
-        rootLeftRight(root->right, depth + 1);
+        printf("[{%d,%d},", root->key, root->height);
+        rootLeftRight(root->left);
+        printf(",");
+        rootLeftRight(root->right);
+        printf("]");
+    } else {
+        printf("[]");
     }
 }
 
 void printTree(struct Node* root) {
-    printf("\n");
-    rootLeftRight(root, 0);
+    rootLeftRight(root);
     printf("\n");
 }
 
-int main(int argc, char *argv[])
-{
-    struct Node* root = NULL;
-    int key;
-    while (1) {
-        printf("---> ");
-        scanf("%d", &key);
-        if (key == 0) {
-            break;
-        }
-        root = insert(root, key);
-        printTree(root);
+struct Node* makeTree(int a[], int size) {
+    struct Node* tree = NULL;
+    for (int i = 0; i < size; i++) {
+        tree = insert(tree, a[i]);
     }
+    return tree;
+}
 
+int main()
+{
+    int a[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+    struct Node* tree = makeTree(a, 15);
+    printTree(tree);
+    
     return 0;
 }
